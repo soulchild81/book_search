@@ -1,0 +1,126 @@
+GET http://localhost:8080/resources
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-19T101614.404.json
+
+###
+
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+
+#회원가입
+POST http://localhost:8080/v1/member/join?id=soulchild&password=1234&name=구종옥&email=soulchild@naver.com
+Content-Type: application/x-www-form-urlencoded
+
+<> 2020-02-19T101619.200.json
+###
+
+#로그인
+POST http://localhost:8080/v1/member/login?id=soulchild&password=1234
+Content-Type: application/x-www-form-urlencoded
+
+<> 2020-02-19T101623.200.json
+###
+
+
+#책검색 API
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+
+<> 2020-02-19T101627.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=장제우&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=장제우&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=장제우&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=전소민&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이문열&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이특&taregt=title&page=1&size=10
+
+<> 2020-02-19T101629.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=이상민&taregt=title&page=1&size=10
+
+<> 2020-02-19T101630.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=트와이스&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이지훈&taregt=title&page=1&size=10
+
+<> 2020-02-19T101634.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=블러드본&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=벅스&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=벅스&taregt=title&page=1&size=10
+
+<> 2020-02-19T101636.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=이재성&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이재성&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이재성&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=백종원&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=백종원&taregt=title&page=1&size=10
+
+<> 2020-02-19T101638.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=백종원&taregt=title&page=1&size=10
+###
+GET http://localhost:8080/v1/book/search/list?query=이혜미&taregt=title&page=1&size=10
+
+<> 2020-02-19T101644.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=이혜미&taregt=title&page=1&size=10
+
+<> 2020-02-19T101643.200.json
+###
+GET http://localhost:8080/v1/book/search/list?query=이혜미&taregt=title&page=1&size=10
+
+<> 2020-02-19T101640.200.json
+###
+
+#검색 히스토리 조회
+GET http://localhost:8080/v1/book/search/history/list?sort=regDate
+
+<> 2020-02-19T101647.200.json
+<> 2020-02-19T100718.200.json
+<> 2020-02-19T100704.200.json
+###
+
+#인기 검색어 조회
+GET http://localhost:8080/v1/book/popular/keyword/list
+
+<> 2020-02-19T101651.200.json
+###
+
+
+
+
+
+
+
+
