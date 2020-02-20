@@ -6,7 +6,6 @@ import com.soulchild.work.api.service.BookService;
 import com.soulchild.work.api.service.KeywordService;
 import com.soulchild.work.api.service.PopularService;
 import com.soulchild.work.common.Constants;
-import com.soulchild.work.common.Exception.CommonException;
 import com.soulchild.work.common.pager.PageArrayList;
 import com.soulchild.work.common.pager.PageList;
 import com.soulchild.work.model.*;
@@ -21,6 +20,7 @@ import retrofit2.Call;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService {
@@ -63,11 +63,10 @@ public class BookServiceImpl implements BookService {
             //Book search
             Call<BookMeta> searchJson = searchRetrofitService.getSearchBook(Constants.kakaoAuthKey, query , target , page , size);
             BookMeta meta = searchJson.execute().body();
-
             if(meta.getDocuments() != null){
                 list = meta.getDocuments();
-                info.setTotal_count(meta.getMeta().getTotal_count());
                 list.stream().forEach(s->bookRepository.save(s));
+                info.setTotal_count(meta.getMeta().getTotal_count());
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -79,38 +78,37 @@ public class BookServiceImpl implements BookService {
                 info.setTotal_count(naverMeta.getTotal());
 
                 List<NaverBook> naverList = naverMeta.getItems();
-                List<Authors> authorList = new ArrayList<>();
+                List<Book> convertBookList = new ArrayList<>();
 
-                for(NaverBook nb : naverList){
-                    Book book = Book.builder()
-                            .title(nb.getTitle())
-                            .contents(nb.getDescription())
-                            .sale_price(Integer.parseInt(nb.getDiscount().equals("")?"0":nb.getDiscount()))
-                            .price(Integer.parseInt(nb.getPrice().equals("")?"0":nb.getPrice()))
-                            .authors(Arrays.asList(nb.getAuthor()))
-                            .isbn(nb.getIsbn())
-                            .publisher(nb.getPublisher())
-                            .thumbnail(nb.getImage())
-                            .url(nb.getLink()).build();
-                    list.add(book);
-                    int id = bookRepository.save(book).getBook_id();
-
-                    Authors author = Authors.builder()
-                            .book_id(id)
-                            .Author(nb.getAuthor()).build();
-                    authorList.add(author);
-                    authorRepository.save(author);
-                }
-
+                naverList.forEach(s -> {
+                                        Book book = this.convertBooks(s);
+                                        convertBookList.add(book);
+                                        authorRepository.save(this.convertAuthor(bookRepository.save(book).getBook_id() , s));
+                                        }
+                                 );
+                list = convertBookList;
             }catch(Exception i){
                 i.printStackTrace();
-                logger.debug("네이버 책검색 장애 !!");
-                throw new CommonException(Constants.RESULT_CODE.API_ERROR);
             }
-
         }
-
         return new PageArrayList<Book>(list, page, size, info.getTotal_count());
+    }
+
+    public Book convertBooks(NaverBook nb){
+        return Book.builder()
+                .title(nb.getTitle())
+                .contents(nb.getDescription())
+                .sale_price(Integer.parseInt(nb.getDiscount().equals("")?"0":nb.getDiscount()))
+                .price(Integer.parseInt(nb.getPrice().equals("")?"0":nb.getPrice()))
+                .authors(Arrays.asList(nb.getAuthor()))
+                .isbn(nb.getIsbn())
+                .publisher(nb.getPublisher())
+                .thumbnail(nb.getImage())
+                .url(nb.getLink()).build();
+    }
+
+    public Authors convertAuthor(int id , NaverBook nb){
+        return Authors.builder().book_id(id).Author(nb.getAuthor()).build();
     }
 }
 
